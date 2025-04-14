@@ -1,0 +1,52 @@
+<div class="auth-container">
+    <div class="auth-box">
+      <h2>{{ isLoginForm ? 'Welcome Back 👋' : 'Create Account 🚀' }}</h2>
+  
+      <form
+        *ngIf="isLoginForm"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+        class="auth-form"
+      >
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" formControlName="username" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn primary">Login</button>
+        <div class="form-footer">
+          <a href="#">Forgot password?</a>
+          <span>|</span>
+          <a (click)="toggleForm()">New here? Register</a>
+        </div>
+      </form>
+  
+      <form
+        *ngIf="!isLoginForm"
+        [formGroup]="register"
+        (ngSubmit)="onRegister()"
+        class="auth-form"
+      >
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" formControlName="email" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" formControlName="username" placeholder="Choose a username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password" placeholder="Create a password" />
+        </div>
+        <button type="submit" class="btn primary">Register</button>
+        <div class="form-footer">
+          <a (click)="toggleForm()">Already have an account? Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  

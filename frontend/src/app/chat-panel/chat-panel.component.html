@@ -1,0 +1,52 @@
+<!-- Header -->
+<div class="chat-header-main">
+  <div class="logo-section">
+    <!-- <img src="assets/logo.png" alt="Logo" /> -->
+    <div class="btn" (click)="backToLogin()">Logout</div>
+    <span>My Support Chat</span>
+  </div>
+
+  <div class="label">User : {{loginuserName}}</div>
+</div>
+
+
+<div class="chat-container">
+  <div class="user-list">
+    <h3>Active Users</h3>
+    <ng-container *ngFor="let user of users.users">
+      <div class="user-item" (click)="openChat(user)" *ngIf="loginuserID !== user._id"
+        [class.active]="selectedUser?._id === user._id">
+        <div class="profile">
+          <img [src]="user?.profile || 'assets/default-profile.png'" alt="profile" />
+          <span class="status" [ngClass]="user?.status || 'offline'"></span>
+        </div>
+        <div class="username">{{ user?.username }}</div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="chat-window" *ngIf="selectedUser">
+    <div class="chat-header">
+      <h3>Chat with {{ selectedUser?.username || 'Customer' }}</h3>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div *ngFor="let msg of currentMessages" [ngClass]="['chat-bubble', msg.type === 'sent' ? 'sender' : 'receiver']">
+        <p>{{ msg.message }}</p>
+      </div>
+      <!-- <div class="typing-event" *ngIf="typing">
+        <div [ngClass]="['chat-bubble', 'receiver']" >Typing here...</div>
+      </div> -->
+    </div>
+
+    <div class="chat-footer" *ngIf="selectedUser">
+      <input type="text" [(ngModel)]="message" (input)="onTyping()" (keydown.enter)="sendMessage()"
+        placeholder="Type a message..." />
+      <button (click)="sendMessage()">Send</button>
+    </div>
+
+  </div>
+  <div class="chat-window empty" *ngIf="!selectedUser">
+    <div class="chat-placeholder">Select a user to start chatting</div>
+  </div>
+</div>
